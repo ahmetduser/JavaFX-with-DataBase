@@ -1,0 +1,22 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+/*Application window background color*/
+#AnchorPane{
+    -fx-background-color:#e0e0e0;
+}
+/*Button customizing*/
+.button{
+    -fx-text-fill:white;
+    -fx-font-family:"Arial";
+    -fx-font-weight:bold;
+    -fx-background-color:#666666;
+}
+.button:hover {
+    -fx-background-color:#999999;
+    color:#e8e7e7
+}
