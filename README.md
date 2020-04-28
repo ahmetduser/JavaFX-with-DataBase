@@ -1,11 +1,11 @@
 Task: To calculate the overall cost of business trips they need to know a close approximation of fuel cost.
 
-A GUI based, stand-alone application that takes 3 parameters from the user; 
+A GUI based, stand-alone application that takes 5 parameters from the user; 
 1-the distance in miles, 
 2-cars fuel efficiency in miles per gallon,
 3-the type of the fuel (98-Octane and Diesel), the costs of the fuels are in per liter. The application should provide an ability to pick which fuel is used in the algorithm,
 4-user name,
-4-the user will have the option of displaying the past trips(Within 3 days, Within 7 days, and Show all).
+5-the user will have the option of displaying the past trips(Within 3 days, Within 7 days, and Show all).
 
 The cost of fuel per litter is read from the DataBase.The parameters used to calculate the cost of fuel as well as the final cost is saved in the DataBase.
 
