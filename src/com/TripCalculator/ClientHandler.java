@@ -98,7 +98,7 @@ public class ClientHandler implements Runnable {
 
             conn.close();
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            System.out.println("Cannot connect to the database " + e.getMessage());
         }
     }
 
@@ -128,11 +128,13 @@ public class ClientHandler implements Runnable {
 
             conn.close();
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            System.out.println("Cannot connect to the database " + e.getMessage());
+        } catch (com.mysql.cj.exceptions.WrongArgumentException e) {
+            System.out.println("Wrong Argument Exception " + e.getMessage());
         }
 
     }
-    
+
     // Retrieve the costs of the per fuel from fuel_costs table
     public static double fuelRead(String fuelType) {
         double result = 0;
