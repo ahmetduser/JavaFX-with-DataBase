@@ -27,7 +27,8 @@ DataBase Description:
 
 CREATE TABLE users_table(
 	User_ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	User_Name VARCHAR(20)
+	User_Name VARCHAR(20),
+	date DATE
 );
 
 
