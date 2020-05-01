@@ -18,17 +18,19 @@ public class Parameters implements Serializable {
     String fuelType;
     double cost;
     String userName;
+    String error;
 
     public Parameters() {
 
     }
 
-    public Parameters(double distance, double MPG, String fuelType, double cost, String userName) {
+    public Parameters(double distance, double MPG, String fuelType, double cost, String userName, String error) {
         this.distance = distance;
         this.MPG = MPG;
         this.fuelType = fuelType;
         this.cost = cost;
         this.userName = userName;
+        this.error = error;
     }
 
     // setters
@@ -51,6 +53,10 @@ public class Parameters implements Serializable {
     public void setCost(double cost) {
         this.cost = cost;
     }
+    
+    public void setError(String error){
+        this.error = error;
+    }
 
     // getters
     public String getUserName() {
@@ -71,6 +77,10 @@ public class Parameters implements Serializable {
 
     public double getCost() {
         return this.cost;
+    }
+    
+    public String getError(){
+        return this.error;
     }
 
     @Override

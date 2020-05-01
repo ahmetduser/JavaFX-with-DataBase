@@ -34,6 +34,7 @@ public class ClientHandler implements Runnable {
     double MPG;
     String type;
     String userName;
+    String error;
 
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -52,6 +53,14 @@ public class ClientHandler implements Runnable {
             MPG = par.getMPG();
             type = par.getFuelType();
             userName = par.getUserName();
+            error = par.getError();
+
+            try {
+                // sends user names to the database with the date
+                usersTable(userName);
+            } catch (java.lang.NullPointerException ex) {
+                par.setError("User does not exist...");
+            }
 
             if ("98-Octane".equalsIgnoreCase(type)) {
                 costOfFuel = (distance / (MPG * 0.219969248)) * fuelRead("98-Octane");
@@ -69,16 +78,18 @@ public class ClientHandler implements Runnable {
             System.err.println("Class Not Found: " + ex.getMessage());
         }
 
-        // sends user names to the database
-        usersTable(userName);
-        // sends trip informations to the database
-        tripInformationTable(userName, distance, MPG, type, costOfFuel);
+        try {
+            // sends trip informations to the database
+            tripInformationTable(userName, distance, MPG, type, costOfFuel);
+        } catch (java.lang.NullPointerException ex) {
+
+        }
 
     }
 
     public static void usersTable(String userName) {
 
-        try (Connection conn = GetDatabaseConnection()) {
+        try (Connection conn = GetDatabaseConnection(userName)) {
             System.out.println("Database connected!");
 
             // The mysql insert statement for table users_table
@@ -104,7 +115,7 @@ public class ClientHandler implements Runnable {
 
     public static void tripInformationTable(String userName, double distance, double MPG, String type, double cost) {
 
-        try (Connection conn = GetDatabaseConnection()) {
+        try (Connection conn = GetDatabaseConnection(userName)) {
             System.out.println("Database connected!");
 
             // The mysql insert statement for table trip_information
@@ -138,7 +149,7 @@ public class ClientHandler implements Runnable {
     // Retrieve the costs of the per fuel from fuel_costs table
     public static double fuelRead(String fuelType) {
         double result = 0;
-        try (Connection conn = GetDatabaseConnection()) {
+        try (Connection conn = GetDatabaseConnection("ahmet")) { // default user
             System.out.println("Database connected!");
 
             // create the java statement
@@ -157,8 +168,8 @@ public class ClientHandler implements Runnable {
     }
 
     // returns DataBase connection
-    public static Connection GetDatabaseConnection() {
-        Connection connection = null;
+    public static Connection GetDatabaseConnection(String userName) {
+        Connection res = null;
 
         String dbUrl = "jdbc:mysql://localhost:3306/MiniProject";       // hostname:localhost, portNumber:3306, database: MiniProject
         String user = "root";       //username
@@ -166,13 +177,23 @@ public class ClientHandler implements Runnable {
         try {
             //driver setup for database
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(dbUrl, user, pass);
+            Connection connection = DriverManager.getConnection(dbUrl, user, pass);
+            
+            // User Name validation
+            PreparedStatement validation = connection.prepareStatement("select * from validation where User_Name=?");
+            validation.setString(1, userName);
+            ResultSet rs = validation.executeQuery();
+            if (rs.next()) {    // if the user name is inside the validation table
+                res = connection;
+            } else {
+                System.out.println("User does not exist");
+            }
         } catch (ClassNotFoundException e) {
             throw new IllegalStateException("Cannot find the driver in the classpath!", e);
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
-        return connection;
+        return res;
     }
 
     @Override

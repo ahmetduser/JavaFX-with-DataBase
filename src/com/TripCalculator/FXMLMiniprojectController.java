@@ -78,7 +78,7 @@ public class FXMLMiniprojectController implements Initializable {
         socket = new Socket("localhost", 9999);
         objectOut = new ObjectOutputStream(socket.getOutputStream());
         objectIn = new ObjectInputStream(socket.getInputStream());
-        
+
         // If-Else blocks for checking the user's input
         if (txtGetDistance.getText().isEmpty() && txtGetMPG.getText().isEmpty()) {
             lblError.setText("Please enter the paramteres");
@@ -113,35 +113,39 @@ public class FXMLMiniprojectController implements Initializable {
             lblError.setText(""); // remove the error message
 
         }
-        
+
         // !! After user's input passes the if-else checking part...
         if (radioButton.isSelected()) {
             type = "98-Octane";
             // send the object with the user's inputs to the Server
-            objectOut.writeObject(new Parameters(distance, MPG, type, 0, txtUserName.getText()));// cost variable's value is 0 for now!!
+            objectOut.writeObject(new Parameters(distance, MPG, type, 0, txtUserName.getText(), ""));// cost variable's value is 0 for now!!
             double result = 0;
+            Parameters par = null;
             try {
                 // read the object that is sent from the Server
-                Parameters par = (Parameters) objectIn.readObject();
+                par = (Parameters) objectIn.readObject();
                 result = par.getCost();
             } catch (ClassNotFoundException ex) {
                 lblResult.setText("Class Not Found");
             }
             lblResult.setText(" £" + df.format(result));  // radioButton
+            lblUserNameError.setText(par.getError());
 
         } else {
             type = "Diesel";
             // send the object with the user's inputs to the Server
-            objectOut.writeObject(new Parameters(distance, MPG, type, 0, txtUserName.getText()));// cost variable's value is 0 for now!!
+            objectOut.writeObject(new Parameters(distance, MPG, type, 0, txtUserName.getText(), ""));// cost variable's value is 0 for now!!
             double result = 0;
+            Parameters par = null;
             try {
                 // read the object that is sent from the Server
-                Parameters par = (Parameters) objectIn.readObject();
+                par = (Parameters) objectIn.readObject();
                 result = par.getCost();
             } catch (ClassNotFoundException ex) {
                 lblResult.setText("Class Not Found");
             }
             lblResult.setText(" £" + df.format(result)); // radioButton1
+            lblUserNameError.setText(par.getError());
         }
 
         lblTripInfo.setText("Distance: " + distance
@@ -157,10 +161,10 @@ public class FXMLMiniprojectController implements Initializable {
         if (null != selectedString) {
             switch (selectedString) {
                 case "Within 3 days":
-                    listView.setItems(Record.recordTime("3",txtUserName.getText()));
+                    listView.setItems(Record.recordTime("3", txtUserName.getText()));
                     break;
                 case "Within 7 days":
-                    listView.setItems(Record.recordTime("7",txtUserName.getText()));
+                    listView.setItems(Record.recordTime("7", txtUserName.getText()));
                     break;
                 case "Show all":
                     listView.setItems(Record.getAllInfo(txtUserName.getText()));
