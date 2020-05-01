@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 //MultiThreaded Server
 public class Server {
 
-    public static double costOfFuel;
+    
 
     //ExecutorService automatically provides a pool of threads
     private static final ExecutorService POOL = Executors.newFixedThreadPool(4);

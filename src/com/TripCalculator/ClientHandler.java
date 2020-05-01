@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Driver;
 import java.sql.PreparedStatement;
 import java.text.MessageFormat;
-import static com.TripCalculator.Server.costOfFuel;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -32,6 +31,7 @@ public class ClientHandler implements Runnable {
 
     double distance;
     double MPG;
+    double costOfTrip;
     String type;
     String userName;
     String error;
@@ -63,12 +63,12 @@ public class ClientHandler implements Runnable {
             }
 
             if ("98-Octane".equalsIgnoreCase(type)) {
-                costOfFuel = (distance / (MPG * 0.219969248)) * fuelRead("98-Octane");
-                par.setCost(costOfFuel);
+                costOfTrip = (distance / (MPG * 0.219969248)) * fuelRead("98-Octane");
+                par.setCost(costOfTrip);
                 objectOut.writeObject(par);
             } else if ("Diesel".equalsIgnoreCase(type)) {
-                costOfFuel = (distance / (MPG * 0.219969248)) * fuelRead("Diesel");
-                par.setCost(costOfFuel);
+                costOfTrip = (distance / (MPG * 0.219969248)) * fuelRead("Diesel");
+                par.setCost(costOfTrip);
                 objectOut.writeObject(par);
             }
 
@@ -80,7 +80,7 @@ public class ClientHandler implements Runnable {
 
         try {
             // sends trip informations to the database
-            tripInformationTable(userName, distance, MPG, type, costOfFuel);
+            tripInformationTable(userName, distance, MPG, type, costOfTrip);
         } catch (java.lang.NullPointerException ex) {
 
         }
@@ -198,7 +198,7 @@ public class ClientHandler implements Runnable {
 
     @Override
     public String toString() {
-        return MessageFormat.format("\nDistance:{0} MPG:{1} Fuel Type:{2} Cost:{3}", distance, MPG, type, costOfFuel);
+        return MessageFormat.format("\nDistance:{0} MPG:{1} Fuel Type:{2} Cost:{3}", distance, MPG, type, costOfTrip);
     }
 
 }
