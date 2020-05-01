@@ -31,6 +31,13 @@ CREATE TABLE users_table(
 	date DATE
 );
 
+CREATE TABLE validation(
+	ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    User_Name VARCHAR(20) UNIQUE
+);
+Inser the User_Names that you want to give permision to_
+INSERT INTO `MiniProject`.`validation` (`User_Name`) VALUES ('ahmet');
+
 
 CREATE TABLE trip_information(
 	ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,

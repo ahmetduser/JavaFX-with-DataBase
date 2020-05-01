@@ -14,10 +14,10 @@ CREATE TABLE trip_information(
 	date DATE
 );
 
-CREATE TABLE validation(
-	ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	User_Name VARCHAR(20) UNIQUE
-);
+-- CREATE TABLE validation(
+-- 	ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+-- 	User_Name VARCHAR(20) UNIQUE
+-- );
 
 
 #To find rows created within the 3 days:
