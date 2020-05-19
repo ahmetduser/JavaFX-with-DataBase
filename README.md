@@ -2,15 +2,15 @@
 
 A GUI based, stand-alone application that takes 5 parameters from the user; 
 
-1.The distance in miles, 
+1. The distance in miles, 
 
-2.Cars fuel efficiency in miles per gallon,
+2. Cars fuel efficiency in miles per gallon,
 
-3.The type of the fuel (98-Octane and Diesel), the costs of the fuels are in per liter. The application should provide an ability to pick which fuel is used in the algorithm,
+3. The type of the fuel (98-Octane and Diesel), the costs of the fuels are in per liter. The application should provide an ability to pick which fuel is used in the algorithm,
 
-4.User name,
+4. User name,
 
-5.The user will have the option of displaying the past trips(Within 3 days, Within 7 days, and Show all).
+5. The user will have the option of displaying the past trips(Within 3 days, Within 7 days, and Show all).
 
 The cost of fuel per litter is read from the DataBase.The parameters used to calculate the cost of fuel as well as the final cost is saved in the DataBase.
 
