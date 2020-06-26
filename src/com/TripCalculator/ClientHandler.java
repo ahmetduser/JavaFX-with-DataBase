@@ -178,7 +178,7 @@ public class ClientHandler implements Runnable {
             //driver setup for database
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(dbUrl, user, pass);
-            
+
             // User Name validation
             PreparedStatement validation = connection.prepareStatement("select * from validation where User_Name=?");
             validation.setString(1, userName);
